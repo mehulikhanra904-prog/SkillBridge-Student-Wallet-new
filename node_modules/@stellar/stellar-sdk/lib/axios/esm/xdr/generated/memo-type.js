@@ -1,0 +1,32 @@
+import { enumType } from '@stellar/js-xdr';
+import { EnumValue, withMemberPrefix, enumFromValue, enumFromName } from '../values/enum-value.js';
+
+class MemoType extends EnumValue {
+  static memoNone = new MemoType("memoNone", 0);
+  static memoText = new MemoType("memoText", 1);
+  static memoId = new MemoType("memoId", 2);
+  static memoHash = new MemoType("memoHash", 3);
+  static memoReturn = new MemoType("memoReturn", 4);
+  static schema = withMemberPrefix(
+    enumType("MemoType", {
+      memoNone: 0,
+      memoText: 1,
+      memoId: 2,
+      memoHash: 3,
+      memoReturn: 4
+    }),
+    "memo"
+  );
+  static fromValue(value) {
+    return enumFromValue("MemoType", MemoType.schema, MemoType, value);
+  }
+  static fromName(name) {
+    return enumFromName("MemoType", MemoType, name);
+  }
+  static fromXdrObject(wire) {
+    return MemoType.fromValue(wire);
+  }
+}
+
+export { MemoType };
+//# sourceMappingURL=memo-type.js.map

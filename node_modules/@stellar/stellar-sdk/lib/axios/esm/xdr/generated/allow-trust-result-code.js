@@ -1,0 +1,62 @@
+import { enumType } from '@stellar/js-xdr';
+import { EnumValue, withMemberPrefix, enumFromValue, enumFromName } from '../values/enum-value.js';
+
+class AllowTrustResultCode extends EnumValue {
+  static allowTrustSuccess = new AllowTrustResultCode(
+    "allowTrustSuccess",
+    0
+  );
+  static allowTrustMalformed = new AllowTrustResultCode(
+    "allowTrustMalformed",
+    -1
+  );
+  static allowTrustNoTrustLine = new AllowTrustResultCode(
+    "allowTrustNoTrustLine",
+    -2
+  );
+  static allowTrustTrustNotRequired = new AllowTrustResultCode(
+    "allowTrustTrustNotRequired",
+    -3
+  );
+  static allowTrustCantRevoke = new AllowTrustResultCode(
+    "allowTrustCantRevoke",
+    -4
+  );
+  static allowTrustSelfNotAllowed = new AllowTrustResultCode(
+    "allowTrustSelfNotAllowed",
+    -5
+  );
+  static allowTrustLowReserve = new AllowTrustResultCode(
+    "allowTrustLowReserve",
+    -6
+  );
+  static schema = withMemberPrefix(
+    enumType("AllowTrustResultCode", {
+      allowTrustSuccess: 0,
+      allowTrustMalformed: -1,
+      allowTrustNoTrustLine: -2,
+      allowTrustTrustNotRequired: -3,
+      allowTrustCantRevoke: -4,
+      allowTrustSelfNotAllowed: -5,
+      allowTrustLowReserve: -6
+    }),
+    "allowTrust"
+  );
+  static fromValue(value) {
+    return enumFromValue(
+      "AllowTrustResultCode",
+      AllowTrustResultCode.schema,
+      AllowTrustResultCode,
+      value
+    );
+  }
+  static fromName(name) {
+    return enumFromName("AllowTrustResultCode", AllowTrustResultCode, name);
+  }
+  static fromXdrObject(wire) {
+    return AllowTrustResultCode.fromValue(wire);
+  }
+}
+
+export { AllowTrustResultCode };
+//# sourceMappingURL=allow-trust-result-code.js.map

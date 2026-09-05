@@ -1,0 +1,17 @@
+export declare const CONTRACT_COST_COUNT_LIMIT = 1024;
+export declare const SC_SPEC_DOC_LIMIT = 1024;
+export declare const SCSYMBOL_LIMIT = 32;
+export declare const MASK_ACCOUNT_FLAGS = 7;
+export declare const MASK_ACCOUNT_FLAGS_V17 = 15;
+export declare const MAX_SIGNERS = 20;
+export declare const MASK_TRUSTLINE_FLAGS = 1;
+export declare const MASK_TRUSTLINE_FLAGS_V13 = 3;
+export declare const MASK_TRUSTLINE_FLAGS_V17 = 7;
+export declare const MASK_OFFERENTRY_FLAGS = 1;
+export declare const MASK_CLAIMABLE_BALANCE_FLAGS = 1;
+export declare const MASK_LEDGER_HEADER_FLAGS = 7;
+export declare const AUTH_MSG_FLAG_FLOW_CONTROL_BYTES_REQUESTED = 200;
+export declare const TX_ADVERT_VECTOR_MAX_SIZE = 1000;
+export declare const TX_DEMAND_VECTOR_MAX_SIZE = 1000;
+export declare const MAX_OPS_PER_TX = 100;
+export declare const LIQUIDITY_POOL_FEE_V18 = 30;

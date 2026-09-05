@@ -1,0 +1,115 @@
+import { DecoratedSignature, FeeBumpTransaction, Transaction, TransactionEnvelope, TransactionV0 } from "../xdr/index.js";
+import { Keypair } from "./keypair.js";
+/**
+ * @ignore
+ */
+export declare class TransactionBase<TTx extends FeeBumpTransaction | Transaction | TransactionV0> {
+    private _tx;
+    private _signatures;
+    private _fee;
+    private _networkPassphrase;
+    constructor(tx: TTx, signatures: DecoratedSignature[], fee: string, networkPassphrase: string);
+    /** The list of signatures for this transaction. */
+    get signatures(): DecoratedSignature[];
+    set signatures(_value: DecoratedSignature[]);
+    /**
+     * The underlying XDR transaction object.
+     *
+     * Returns a defensive copy so that external mutations cannot alter the
+     * transaction that will be signed or serialized.
+     *
+     * @throws if the internal transaction is not a recognized XDR type
+     */
+    get tx(): TTx;
+    set tx(_value: TTx);
+    /** The total fee for this transaction, in stroops. */
+    get fee(): string;
+    set fee(_value: string);
+    /** The network passphrase for this transaction. */
+    get networkPassphrase(): string;
+    set networkPassphrase(_networkPassphrase: string);
+    /**
+     * Signs the transaction with the given {@link Keypair}.
+     * @param keypairs - Keypairs of signers
+     */
+    sign(...keypairs: Keypair[]): void;
+    /**
+     * Signs a transaction with the given {@link Keypair}. Useful if someone sends
+     * you a transaction XDR for you to sign and return (see
+     * {@link addSignature} for more information).
+     *
+     * When you get a transaction XDR to sign....
+     * - Instantiate a `Transaction` object with the XDR
+     * - Use {@link Keypair} to generate a keypair object for your Stellar seed.
+     * - Run `getKeypairSignature` with that keypair
+     * - Send back the signature along with your publicKey (not your secret seed!)
+     *
+     * Example:
+     * ```javascript
+     * // `transactionXDR` is a string from the person generating the transaction
+     * const transaction = new Transaction(transactionXDR, networkPassphrase);
+     * const keypair = Keypair.fromSecret(myStellarSeed);
+     * return transaction.getKeypairSignature(keypair);
+     * ```
+     *
+     * Returns the base64-encoded signature string for the given keypair.
+     *
+     * @param keypair - Keypair of signer
+     */
+    getKeypairSignature(keypair: Keypair): string;
+    /**
+     * Add a signature to the transaction. Useful when a party wants to pre-sign
+     * a transaction but doesn't want to give access to their secret keys.
+     * This will also verify whether the signature is valid.
+     *
+     * Here's how you would use this feature to solicit multiple signatures.
+     * - Use `TransactionBuilder` to build a new transaction.
+     * - Make sure to set a long enough timeout on that transaction to give your
+     * signers enough time to sign!
+     * - Once you build the transaction, use `transaction.toXdr()` to get the
+     * base64-encoded XDR string.
+     * - _Warning!_ Once you've built this transaction, don't submit any other
+     * transactions onto your account! Doing so will invalidate this pre-compiled
+     * transaction!
+     * - Send this XDR string to your other parties. They can use the instructions
+     * for {@link getKeypairSignature} to sign the transaction.
+     * - They should send you back their `publicKey` and the `signature` string
+     * from {@link getKeypairSignature}, both of which you pass to
+     * this function.
+     *
+     * @param publicKey - the public key of the signer
+     * @param signature - the base64 value of the signature XDR
+     */
+    addSignature(publicKey?: string, signature?: string): void;
+    /**
+     * Add a decorated signature directly to the transaction envelope.
+     *
+     * @param signature - raw signature to add
+     *
+     * @see Keypair.signDecorated
+     * @see Keypair.signPayloadDecorated
+     */
+    addDecoratedSignature(signature: DecoratedSignature): void;
+    /**
+     * Add `hashX` signer preimage as signature.
+     * @param preimage - preimage of hash used as signer
+     */
+    signHashX(preimage: Uint8Array | string): void;
+    /**
+     * Returns a hash for this transaction, suitable for signing.
+     */
+    hash(): Uint8Array;
+    /** Returns the signature base for this transaction, to be overridden by subclasses. */
+    signatureBase(): Uint8Array;
+    /** Returns the XDR transaction envelope, to be overridden by subclasses. */
+    toEnvelope(): TransactionEnvelope;
+    /**
+     * Returns the transaction envelope as a base64-encoded XDR string.
+     */
+    toXdr(): string;
+    /**
+     * @deprecated Use {@link toXdr} instead.
+     * Deprecated in version v17.0.0
+     */
+    toXDR(): string;
+}

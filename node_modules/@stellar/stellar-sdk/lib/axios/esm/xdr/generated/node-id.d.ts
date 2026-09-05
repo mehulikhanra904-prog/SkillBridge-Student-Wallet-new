@@ -1,0 +1,31 @@
+import { PublicKey, type PublicKeyWire } from "./public-key.js";
+export type NodeId = PublicKey;
+export declare const NodeId: (abstract new () => {
+    readonly type: import("./public-key.js").PublicKeyVariantName;
+    toXdrObject(): PublicKeyWire;
+    toXdr(): Uint8Array;
+    toXdr(format: "raw"): Uint8Array;
+    toXdr(format: "hex" | "base64"): string;
+    toXDR(): Uint8Array;
+    toXDR(format: "raw"): Uint8Array;
+    toXDR(format: "hex" | "base64"): string;
+    toString(): string;
+    toJson(): import("../index.js").JsonValue;
+    toJSON(): import("../index.js").JsonValue;
+    equals(other: import("../index.js").XdrValue): boolean;
+}) & {
+    readonly schema: import("@stellar/js-xdr").XdrType<PublicKeyWire>;
+    publicKeyTypeEd25519(ed25519: import("./uint256-bytes.js").Uint256Bytes | Uint8Array | string): import("./public-key.js").PublicKeyEd25519;
+    fromXdrObject(wire: PublicKeyWire): PublicKey;
+    is(value: unknown): value is PublicKey;
+    fromXdr<Wire, Instance extends import("../index.js").XdrValue>(this: import("../index.js").XdrValueConstructor<Wire, Instance>, input: Uint8Array): Instance;
+    fromXdr<Wire, Instance extends import("../index.js").XdrValue>(this: import("../index.js").XdrValueConstructor<Wire, Instance>, input: string, format: "hex" | "base64"): Instance;
+    fromXDR<Wire, Instance extends import("../index.js").XdrValue>(this: import("../index.js").XdrValueConstructor<Wire, Instance>, input: Uint8Array): Instance;
+    fromXDR<Wire, Instance extends import("../index.js").XdrValue>(this: import("../index.js").XdrValueConstructor<Wire, Instance>, input: string, format: "hex" | "base64"): Instance;
+    validateXdr<Wire, Instance extends import("../index.js").XdrValue>(this: import("../index.js").XdrValueConstructor<Wire, Instance>, input: Uint8Array): boolean;
+    validateXdr<Wire, Instance extends import("../index.js").XdrValue>(this: import("../index.js").XdrValueConstructor<Wire, Instance>, input: string, format: "hex" | "base64"): boolean;
+    validateXDR<Wire, Instance extends import("../index.js").XdrValue>(this: import("../index.js").XdrValueConstructor<Wire, Instance>, input: Uint8Array): boolean;
+    validateXDR<Wire, Instance extends import("../index.js").XdrValue>(this: import("../index.js").XdrValueConstructor<Wire, Instance>, input: string, format: "hex" | "base64"): boolean;
+    fromJson<Wire, Instance extends import("../index.js").XdrValue>(this: import("../index.js").XdrValueConstructor<Wire, Instance>, json: import("../index.js").JsonValue): Instance;
+};
+export type NodeIdWire = PublicKeyWire;

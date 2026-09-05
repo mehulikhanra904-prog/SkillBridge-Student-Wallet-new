@@ -1,0 +1,55 @@
+import { enumType } from '@stellar/js-xdr';
+import { EnumValue, withMemberPrefix, enumFromValue, enumFromName } from '../values/enum-value.js';
+
+class InvokeHostFunctionResultCode extends EnumValue {
+  static invokeHostFunctionSuccess = new InvokeHostFunctionResultCode(
+    "invokeHostFunctionSuccess",
+    0
+  );
+  static invokeHostFunctionMalformed = new InvokeHostFunctionResultCode("invokeHostFunctionMalformed", -1);
+  static invokeHostFunctionTrapped = new InvokeHostFunctionResultCode(
+    "invokeHostFunctionTrapped",
+    -2
+  );
+  static invokeHostFunctionResourceLimitExceeded = new InvokeHostFunctionResultCode(
+    "invokeHostFunctionResourceLimitExceeded",
+    -3
+  );
+  static invokeHostFunctionEntryArchived = new InvokeHostFunctionResultCode("invokeHostFunctionEntryArchived", -4);
+  static invokeHostFunctionInsufficientRefundableFee = new InvokeHostFunctionResultCode(
+    "invokeHostFunctionInsufficientRefundableFee",
+    -5
+  );
+  static schema = withMemberPrefix(
+    enumType("InvokeHostFunctionResultCode", {
+      invokeHostFunctionSuccess: 0,
+      invokeHostFunctionMalformed: -1,
+      invokeHostFunctionTrapped: -2,
+      invokeHostFunctionResourceLimitExceeded: -3,
+      invokeHostFunctionEntryArchived: -4,
+      invokeHostFunctionInsufficientRefundableFee: -5
+    }),
+    "invokeHostFunction"
+  );
+  static fromValue(value) {
+    return enumFromValue(
+      "InvokeHostFunctionResultCode",
+      InvokeHostFunctionResultCode.schema,
+      InvokeHostFunctionResultCode,
+      value
+    );
+  }
+  static fromName(name) {
+    return enumFromName(
+      "InvokeHostFunctionResultCode",
+      InvokeHostFunctionResultCode,
+      name
+    );
+  }
+  static fromXdrObject(wire) {
+    return InvokeHostFunctionResultCode.fromValue(wire);
+  }
+}
+
+export { InvokeHostFunctionResultCode };
+//# sourceMappingURL=invoke-host-function-result-code.js.map
